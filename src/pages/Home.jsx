@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import { useSelector, useStore } from 'react-redux'
+import Modal from '../components/Modal'
 
 function Home() {
+    const [modal, setModal] = useState(false)
+    const submit = e => {
+        e.preventDefault()
+    }
     return(
         <React.StrictMode>
+            { modal === true ? <Modal /> : null }
             <div className="title">
                 <h1>HRnet</h1>
             </div>
@@ -49,9 +56,8 @@ function Home() {
                     </select>
                 </form>
 
-                <button onclick="saveEmployee()">Save</button>
+                <button onClick={submit}>Save</button>
             </div>
-            <div id="confirmation" className="modal">Employee Created!</div>
         </React.StrictMode>
     )
 }
