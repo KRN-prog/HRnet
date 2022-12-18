@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useSelector, useStore } from 'react-redux'
+import { fetchOrUpdateEmployee } from '../features/createEmployee'
 import data from '../features/data'
 import Modal from '../components/Modal'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function Home() {
+    const store = useStore()
     const [modal, setModal] = useState(false)
     const [dateOfBirth, setDateOfBirth] = useState(null);
     const [startDate, setStartDate] = useState(null);
@@ -22,20 +24,9 @@ function Home() {
     const handleSubmit = event => {
         event.preventDefault();
 
-        // 👇️ access input values here
-        /*console.log('first name 👉️', firstName.current.value);
-        console.log('last name 👉️', lastName.current.value);
-        console.log('date of birth 👉️', dateOfBirth);
-        console.log('start date 👉️', startDate);
-        console.log('street name 👉️', streetName.current.value);
-        console.log('city name 👉️', cityName.current.value);
-        console.log('state name 👉️', stateName.current.value);
-        console.log('zip code 👉️', zipCode.current.value);
-        console.log('department 👉️', department.current.value);*/
-
-
         let newBirthDate = null
         let newStartDate = null
+        console.log()
         if (dateOfBirth) {
             newBirthDate = `${dateOfBirth.getDate()}/${dateOfBirth.getMonth()}/${dateOfBirth.getFullYear()}`
             newStartDate = `${startDate.getDate()}/${startDate.getMonth()}/${startDate.getFullYear()}`
@@ -51,6 +42,8 @@ function Home() {
             state: stateName.current.value,
             zipCode: zipCode.current.value
         }
+        fetchOrUpdateEmployee(store, employee)
+        //setModal( !modal )
 
 
         event.target.reset();
