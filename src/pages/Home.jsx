@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useSelector, useStore } from 'react-redux'
 import data from '../features/data'
@@ -20,19 +20,20 @@ function Home() {
 
 
     const handleSubmit = event => {
-        event.preventDefault(); // 👈️ prevent page refresh
+        event.preventDefault();
 
         // 👇️ access input values here
-        console.log('first name 👉️', firstName.current.value);
+        /*console.log('first name 👉️', firstName.current.value);
         console.log('last name 👉️', lastName.current.value);
-
         console.log('date of birth 👉️', dateOfBirth);
         console.log('start date 👉️', startDate);
         console.log('street name 👉️', streetName.current.value);
         console.log('city name 👉️', cityName.current.value);
         console.log('state name 👉️', stateName.current.value);
         console.log('zip code 👉️', zipCode.current.value);
-        console.log('department 👉️', department.current.value);
+        console.log('department 👉️', department.current.value);*/
+
+
         let newBirthDate = null
         let newStartDate = null
         if (dateOfBirth) {
@@ -49,11 +50,9 @@ function Home() {
             city: cityName.current.value,
             state: stateName.current.value,
             zipCode: zipCode.current.value
-        };
-        console.log(employee)
+        }
 
 
-        // 👇️ clear all input values in the form
         event.target.reset();
     }
     return(
