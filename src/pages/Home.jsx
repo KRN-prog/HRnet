@@ -8,18 +8,15 @@ import "react-datepicker/dist/react-datepicker.css";
 
 function Home() {
     const [modal, setModal] = useState(false)
-
+    const [dateOfBirth, setDateOfBirth] = useState(null);
+    const [startDate, setStartDate] = useState(null);
     const firstName = useRef(null);
     const lastName = useRef(null);
-
-    const dateOfBirth = useRef(null);
-    //const startDate = useRef(null);
     const streetName = useRef(null);
     const cityName = useRef(null);
     const stateName = useRef(null);
     const zipCode = useRef(null);
     const department = useRef(null);
-    const [startDate, setStartDate] = useState(null);
 
 
     const handleSubmit = event => {
@@ -29,14 +26,31 @@ function Home() {
         console.log('first name 👉️', firstName.current.value);
         console.log('last name 👉️', lastName.current.value);
 
-        console.log('date of birth 👉️', dateOfBirth.current.value);
-        console.log('date of birth 2 👉️', startDate);
-        console.log('start date 👉️', startDate.current.value);
+        console.log('date of birth 👉️', dateOfBirth);
+        console.log('start date 👉️', startDate);
         console.log('street name 👉️', streetName.current.value);
         console.log('city name 👉️', cityName.current.value);
         console.log('state name 👉️', stateName.current.value);
         console.log('zip code 👉️', zipCode.current.value);
         console.log('department 👉️', department.current.value);
+        let newBirthDate = null
+        let newStartDate = null
+        if (dateOfBirth) {
+            newBirthDate = `${dateOfBirth.getDate()}/${dateOfBirth.getMonth()}/${dateOfBirth.getFullYear()}`
+            newStartDate = `${startDate.getDate()}/${startDate.getMonth()}/${startDate.getFullYear()}`
+        }
+        const employee = {
+            firstName: firstName.current.value,
+            lastName: lastName.current.value,
+            dateOfBirth: newBirthDate,
+            startDate: newStartDate,
+            department: department.current.value,
+            street: streetName.current.value,
+            city: cityName.current.value,
+            state: stateName.current.value,
+            zipCode: zipCode.current.value
+        };
+        console.log(employee)
 
 
         // 👇️ clear all input values in the form
@@ -59,17 +73,10 @@ function Home() {
                     <input type="text" id="last-name" name="last-name" ref={lastName}/>
 
                     <label htmlFor="date-of-birth">Date of Birth</label>
-                    <DatePicker
-                    id="date-of-birth"
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    maxDate={new Date()}
-                    showDisabledMonthNavigation
-                    ref={dateOfBirth}
-                    />
+                    <DatePicker id="date-of-birth" selected={dateOfBirth} onChange={(date) => setDateOfBirth(date)} maxDate={new Date()} showDisabledMonthNavigation />
 
                     <label htmlFor="start-date">Start Date</label>
-                    <input id="start-date" name="start-date" type="text" ref={startDate}/>
+                    <DatePicker id="date-of-birth" selected={startDate} onChange={(date) => setStartDate(date)} minDate={new Date()} showDisabledMonthNavigation />
 
                     <fieldset className="address">
                         <legend>Address</legend>
