@@ -11,8 +11,7 @@ const SEND = 'newEmployee/send'
 const newEmployeeSend = (data) => ({ type: SEND, payload: data })
 
 
-export async function fetchOrUpdateEmployee(store, employeeInfo) {
-  //console.log(userToken)
+export function fetchOrUpdateEmployee(store, employeeInfo) {
   console.log(employeeInfo)
   const status = selectEmployee(store.getState()).status
 
@@ -21,28 +20,6 @@ export async function fetchOrUpdateEmployee(store, employeeInfo) {
   }
 
   store.dispatch(newEmployeeSend(employeeInfo))
-  /*store.dispatch(userFetching())
-  if (userToken !== undefined) {
-    try{
-      const response = await fetch('http://localhost:3001/api/v1/user/profile', {
-        method: 'post',
-        headers: new Headers({
-          "Authorization": `Bearer ${userToken}`
-        })
-      })
-      const data = await response.json()
-      if(data.status === 200){
-        store.dispatch(userResolved(data))
-      }else{
-        store.dispatch(userRejected("Connexion non authorizé"))
-      }
-      //console.log(data)
-    }catch (error){
-      store.dispatch(userRejected(error))
-    } 
-  }else{
-    store.dispatch(userRejected(""))
-  }*/
 }
 
 export default function employeeReducer(state = initialState, action) {

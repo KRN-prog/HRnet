@@ -1,9 +1,11 @@
 import { combineReducers, createStore } from 'redux'
 import employeeReducer from '../features/createEmployee'
+import splicedEmployeesReducer from '../features/spliceEmployees'
 
 
 const reducer = combineReducers({
-    employee: employeeReducer
+    employee: employeeReducer,
+    splicedEmployees: splicedEmployeesReducer
 })
 
 const reduxDevtools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

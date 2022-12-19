@@ -71,3 +71,64 @@ label {
   background-position: center center;
   background-image: url(../../assets/close.png);
 }
+
+
+
+.paginationBtns{
+  width: 25%;
+  float: right;
+  box-sizing: border-box;
+  list-style: none;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  min-width: 1.5em;
+  padding: 0.5em 1em;
+  margin-left: 2px;
+  text-align: center;
+  text-decoration: none !important;
+  cursor: pointer;
+  cursor: hand;
+  color: #333 !important;
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
+.activePage, .activePage:hover{
+  width: 25px;
+  color: #333 !important;
+  border: 1px solid #979797;
+  background: linear-gradient(to bottom, #fff 0%, #dcdcdc 100%);
+}
+.nextBtn, .previousBtn{
+  box-sizing: border-box;
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.5em 1em;
+  margin-left: 2px;
+  text-align: center;
+  text-decoration: none !important;
+  cursor: pointer;
+  *cursor: hand;
+  color: #333 !important;
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
+.nextBtn:hover, .previousBtn:hover{
+  color: white !important;
+  border: 1px solid #111;
+  background: linear-gradient(to bottom, #585858 0%, #111 100%);
+}
+.previous.disabledBtn > .previousBtn, .previousBtn:hover{
+  cursor: default;
+  color: #666 !important;
+  border: 1px solid transparent;
+  background: none;
+  box-shadow: none;
+}
+.next.disabledBtn > .nextBtn, .nextBtn:hover{
+  cursor: default;
+  color: #666 !important;
+  border: 1px solid transparent;
+  background: transparent;
+  box-shadow: none;
+}
