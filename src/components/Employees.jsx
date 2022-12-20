@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import ReactPaginate from 'react-paginate'
-import { useSelector } from 'react-redux'
+import { useSelector, useStore } from 'react-redux'
 import { selectEmployee } from '../utils/selector'
+import { fetchOrUpdateEmployee } from '../features/createEmployee'
 import Sorting from "./Sorting";
 
 function Employees({nbEntries}) {
+    const store = useStore()
     const employes = useSelector(selectEmployee)
     const employees = employes.data
     console.log(employees)
@@ -70,16 +72,30 @@ function Employees({nbEntries}) {
     console.log(pageCount)
     console.log(employees.length) // Nombre total d'employées enregistré
     console.log(numberOfFirstEmployeeShownOnPage)
+    const [order, setOrder] = useState("ASC")
 
-    const sorting = e => {
-        console.log(e)
+    const sorting = (col) => {
+        if (order === "ASC") {
+            const sorted = [...employees].sort((a,b) =>
+                a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+            )
+            fetchOrUpdateEmployee(store, sorted)
+            setOrder("DESC")
+        }
+        if (order === "DESC") {
+            const sorted = [...employees].sort((a,b) =>
+                a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+            )
+            fetchOrUpdateEmployee(store, sorted)
+            setOrder("ASC")
+        }
     }
     return(
         <React.StrictMode>
             <table>
                 <thead>
                     <tr>
-                        <th onClick={() => sorting}>First name</th>
+                        <th onClick={() => sorting("firstName")}>First name</th>
                         <th>Last name</th>
                         <th>Start date</th>
                         <th>Departement</th>
