@@ -53,9 +53,6 @@ function Employees({nbEntries, data}) {
 
 
     const displayEmployees = employees.slice(pageVisited, pageVisited + employeesPerPage).map((employee, employeeIx) => {
-        /*const newBirthDate = `${employee.dateOfBirth.getDate()}/${employee.dateOfBirth.getMonth()}/${employee.dateOfBirth.getFullYear()}`
-        const newStartDate = `${employee.startDate.getDate()}/${employee.startDate.getMonth()}/${employee.startDate.getFullYear()}`*/
-        //console.log(new Date(newBirthDate).getTime())
         return(
             <tr key={`employee-${employeeIx}`}>
                 <td>{employee.firstName}</td>
@@ -71,11 +68,8 @@ function Employees({nbEntries, data}) {
         )
     })
 
-    /*console.log(pageCount)
-    console.log(employees.length) // Nombre total d'employées enregistré
-    console.log(numberOfFirstEmployeeShownOnPage)*/
-    const [order, setOrder] = useState("ASC")
 
+    const [order, setOrder] = useState("ASC")
     const sorting = (col, type) => {
         console.log(type)
         if (type === "string") {
@@ -123,7 +117,6 @@ function Employees({nbEntries, data}) {
                 setOrder("ASC")
             }
         }
-        console.log(order)
     }
 
     return(

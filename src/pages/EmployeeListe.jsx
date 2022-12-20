@@ -17,8 +17,8 @@ function EmployeeListe() {
                 item.firstName.toLowerCase().includes(research.toLowerCase()) ||
                 item.lastName.toLowerCase().includes(research.toLowerCase()) ||
                 item.dateOfBirth.toLocaleDateString().toString().toLowerCase().includes(research) ||
-                item.department.toLowerCase().includes(research.toLowerCase()) ||
-                //item.startDate.includes(research.toLowerCase()) ||
+                item.department.toLocaleDateString().toString().toLowerCase().includes(research) ||
+                item.startDate.includes(research.toLowerCase()) ||
                 item.state.toLowerCase().includes(research.toLowerCase()) ||
                 item.street.toLowerCase().includes(research.toLowerCase()) ||
                 item.city.toLowerCase().includes(research.toLowerCase()) ||
