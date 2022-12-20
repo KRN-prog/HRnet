@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import ReactPaginate from 'react-paginate'
-import { useSelector, useStore } from 'react-redux'
-import { selectEmployee } from '../utils/selector'
+import { useStore } from 'react-redux'
 import { fetchOrUpdateEmployee } from '../features/createEmployee'
-import Sorting from "./Sorting";
 
-function Employees({nbEntries}) {
+function Employees({nbEntries, data}) {
     const store = useStore()
-    const employes = useSelector(selectEmployee)
-    const employees = employes.data
+    //const employes = useSelector(selectEmployee)
+    const employees = data
+    // A L'écoute des modification du store
     console.log(employees)
     const [pageNumber, setPageNumber] = useState(0)
     const employeesPerPage = nbEntries // Nombre d'employées affiché par pages
@@ -53,57 +52,94 @@ function Employees({nbEntries}) {
 
 
 
-    const displayEmployees = employees.slice(pageVisited, pageVisited + employeesPerPage).map((employee) => {
+    const displayEmployees = employees.slice(pageVisited, pageVisited + employeesPerPage).map((employee, employeeIx) => {
+        /*const newBirthDate = `${employee.dateOfBirth.getDate()}/${employee.dateOfBirth.getMonth()}/${employee.dateOfBirth.getFullYear()}`
+        const newStartDate = `${employee.startDate.getDate()}/${employee.startDate.getMonth()}/${employee.startDate.getFullYear()}`*/
+        //console.log(new Date(newBirthDate).getTime())
         return(
-            <tr>
-                <td key={employee.firstName}>{employee.firstName}</td>
-                <td key={employee.lastName}>{employee.lastName}</td>
-                <td key={employee.startDate}>{employee.startDate}</td>
-                <td key={employee.department}>{employee.department}</td>
-                <td key={employee.dateOfBirth}>{employee.dateOfBirth}</td>
-                <td key={employee.street}>{employee.street}</td>
-                <td key={employee.city}>{employee.city}</td>
-                <td key={employee.state}>{employee.state}</td>
-                <td key={employee.zipCode}>{employee.zipCode}</td>
+            <tr key={`employee-${employeeIx}`}>
+                <td>{employee.firstName}</td>
+                <td>{employee.lastName}</td>
+                <td>{employee.startDate.toLocaleDateString()}</td>
+                <td>{employee.department}</td>
+                <td>{employee.dateOfBirth.toLocaleDateString()}</td>
+                <td>{employee.street}</td>
+                <td>{employee.city}</td>
+                <td>{employee.state}</td>
+                <td>{employee.zipCode}</td>
             </tr>
         )
     })
 
-    console.log(pageCount)
+    /*console.log(pageCount)
     console.log(employees.length) // Nombre total d'employées enregistré
-    console.log(numberOfFirstEmployeeShownOnPage)
+    console.log(numberOfFirstEmployeeShownOnPage)*/
     const [order, setOrder] = useState("ASC")
 
-    const sorting = (col) => {
-        if (order === "ASC") {
-            const sorted = [...employees].sort((a,b) =>
-                a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
-            )
-            fetchOrUpdateEmployee(store, sorted)
-            setOrder("DESC")
+    const sorting = (col, type) => {
+        console.log(type)
+        if (type === "string") {
+            if (order === "ASC") {
+                const sorted = [...employees].sort((a,b) =>{
+                    return a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+                })
+                fetchOrUpdateEmployee(store, sorted)
+                setOrder("DESC")
+            }
+            if (order === "DESC") {
+                const sorted = [...employees].sort((a,b) =>{
+                    console.log(a[col])
+                    return a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+                })
+                fetchOrUpdateEmployee(store, sorted)
+                setOrder("ASC")
+            }
+        }else if (type === "int") {
+            if (order === "ASC") {
+                const sorted = [...employees].sort((a,b) =>{
+                    let calc
+                    if (col === "dateOfBirth" || col === "startDate") {
+                        calc = a[col].getTime() - b[col].getTime()
+                    }else{
+                        calc = a[col] - b[col]
+                    }
+                    return calc
+                })
+                fetchOrUpdateEmployee(store, sorted)
+                setOrder("DESC")
+            }
+            if (order === "DESC") {
+                const sorted = [...employees].sort((a,b) =>{
+                    console.log(new Date(a[col]).getTime())
+                    let calc
+                    if (col === "dateOfBirth" || col === "startDate") {
+                        calc = b[col].getTime() - a[col].getTime()
+                    }else{
+                        calc = b[col] - a[col]
+                    }
+                    return calc
+                })
+                fetchOrUpdateEmployee(store, sorted)
+                setOrder("ASC")
+            }
         }
-        if (order === "DESC") {
-            const sorted = [...employees].sort((a,b) =>
-                a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
-            )
-            fetchOrUpdateEmployee(store, sorted)
-            setOrder("ASC")
-        }
+        console.log(order)
     }
+
     return(
         <React.StrictMode>
             <table>
                 <thead>
                     <tr>
-                        <th onClick={() => sorting("firstName")}>First name</th>
-                        <th>Last name</th>
-                        <th>Start date</th>
-                        <th>Departement</th>
-                        <th>Date of birth</th>
-                        <th>Street</th>
-                        <th>City</th>
-                        <th>State</th>
-                        <th>Zip Code</th>
+                        <th onClick={() => sorting("firstName", "string")}>First name</th>
+                        <th onClick={() => sorting("lastName", "string")}>Last name</th>
+                        <th onClick={() => sorting("startDate", "int")}>Start date</th>
+                        <th onClick={() => sorting("department", "string")}>Departement</th>
+                        <th onClick={() => sorting("dateOfBirth", "int")}>Date of birth</th>
+                        <th onClick={() => sorting("street", "string")}>Street</th>
+                        <th onClick={() => sorting("city", "string")}>City</th>
+                        <th onClick={() => sorting("state", "int")}>State</th>
+                        <th onClick={() => sorting("zipCode", "int")}>Zip Code</th>
                     </tr>
                 </thead>
                 <tbody>

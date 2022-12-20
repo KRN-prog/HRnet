@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom'
 import { useSelector, useStore } from 'react-redux'
 import { selectModal } from '../utils/selector'
-import { fetchOrUpdateEmployee } from '../features/createEmployee'
+import { fetchOrCreateEmployee } from '../features/createEmployee'
 import { setModal } from '../features/setModal'
 import data from '../features/data'
 import Modal from '../components/Modal'
@@ -29,22 +29,25 @@ function Home() {
         let newBirthDate = null
         let newStartDate = null
         console.log()
-        if (dateOfBirth) {
-            newBirthDate = `${dateOfBirth.getDate()}/${dateOfBirth.getMonth()}/${dateOfBirth.getFullYear()}`
-            newStartDate = `${startDate.getDate()}/${startDate.getMonth()}/${startDate.getFullYear()}`
+        if (dateOfBirth && startDate) {
+            console.log(dateOfBirth)
+            /*newBirthDate = `${dateOfBirth.getDate()}/${dateOfBirth.getMonth()}/${dateOfBirth.getFullYear()}`
+            newStartDate = `${startDate.getDate()}/${startDate.getMonth()}/${startDate.getFullYear()}`*/
+            /*console.log(new Date(newBirthDate).getTime())
+            console.log(new Date(newBirthDate).getTime())*/
         }
         const employee = {
             firstName: firstName.current.value,
             lastName: lastName.current.value,
-            dateOfBirth: newBirthDate,
-            startDate: newStartDate,
+            dateOfBirth: dateOfBirth/*.toLocaleDateString()*/,
+            startDate: startDate/*.toLocaleDateString()*/,
             department: department.current.value,
             street: streetName.current.value,
             city: cityName.current.value,
             state: stateName.current.value,
             zipCode: zipCode.current.value
         }
-        fetchOrUpdateEmployee(store, employee)
+        fetchOrCreateEmployee(store, employee)
         setModal(store)
 
 
@@ -67,7 +70,14 @@ function Home() {
                     <input type="text" id="last-name" name="last-name" ref={lastName}/>
 
                     <label htmlFor="date-of-birth">Date of Birth</label>
-                    <DatePicker id="date-of-birth" selected={dateOfBirth} onChange={(date) => setDateOfBirth(date)} maxDate={new Date()} showDisabledMonthNavigation />
+                    <DatePicker
+                    selected={dateOfBirth}
+                    onChange={(date) => setDateOfBirth(date)}
+                    peekNextMonth
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    />
 
                     <label htmlFor="start-date">Start Date</label>
                     <DatePicker id="date-of-birth" selected={startDate} onChange={(date) => setStartDate(date)} minDate={new Date()} showDisabledMonthNavigation />

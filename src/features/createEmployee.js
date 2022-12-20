@@ -7,11 +7,23 @@ const initialState = {
 }
 
 const SEND = 'newEmployee/send'
+const UPDATE = 'newEmployee/Send'
 
 const newEmployeeSend = (data) => ({ type: SEND, payload: data })
+const newEmployeeUpdate = (data) => ({ type: UPDATE, payload: data })
 
 
 export function fetchOrUpdateEmployee(store, employeeInfo) {
+  console.log(employeeInfo)
+  const status = selectEmployee(store.getState()).status
+
+  if (status === 'pending' || status === 'updating') {
+    return
+  }
+
+  store.dispatch(newEmployeeUpdate(employeeInfo))
+}
+export function fetchOrCreateEmployee(store, employeeInfo) {
   console.log(employeeInfo)
   const status = selectEmployee(store.getState()).status
 
@@ -30,6 +42,10 @@ export default function employeeReducer(state = initialState, action) {
         draft.status = 'resolved'
         return
       }
+      case UPDATE:
+        draft.data = action.payload
+        draft.status = 'resolved'
+        break
       default:
         return
     }
