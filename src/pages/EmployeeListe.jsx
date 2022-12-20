@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useStore } from 'react-redux'
-import { selectEmployee } from '../utils/selector'
-import ReactPaginate from 'react-paginate'
+//import { selectEmployee } from '../utils/selector''
 import Employees from '../components/Employees'
 function EmployeeListe() {
-    const employees = useSelector(selectEmployee)
-    const [employes, setEmployees] = useState(employees.data)
+    //const employees = useSelector(selectEmployee)
+    //const [employes, setEmployees] = useState(employees.data)
     const [nbEntries, setNbEntries] = useState(10)
     return(
         <React.StrictMode>
@@ -20,7 +19,7 @@ function EmployeeListe() {
                 </select> 
                 entries
             </label>
-            <Employees key="employees" employees={employees.data} nbEntries={nbEntries}/>
+            <Employees key="employees" nbEntries={nbEntries}/>
         </React.StrictMode>
     )
 }

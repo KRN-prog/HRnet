@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import ReactPaginate from 'react-paginate'
+import { useSelector } from 'react-redux'
+import { selectEmployee } from '../utils/selector'
+import Sorting from "./Sorting";
 
-function Employees({employees, nbEntries}) {
+function Employees({nbEntries}) {
+    const employes = useSelector(selectEmployee)
+    const employees = employes.data
+    console.log(employees)
     const [pageNumber, setPageNumber] = useState(0)
     const employeesPerPage = nbEntries // Nombre d'employées affiché par pages
     const pageVisited = pageNumber * employeesPerPage // Sur qu'elle page on se trouve
@@ -29,7 +35,7 @@ function Employees({employees, nbEntries}) {
     }
 
     // Si le nombre d'entré est égal à 0 alors on met à 0
-    if (employees.length == 0) {
+    if (employees.length === 0) {
         numberOfFirstEmployeeShownOnPage = pageVisited
     }
 
@@ -65,14 +71,15 @@ function Employees({employees, nbEntries}) {
     console.log(employees.length) // Nombre total d'employées enregistré
     console.log(numberOfFirstEmployeeShownOnPage)
 
-
-
+    const sorting = e => {
+        console.log(e)
+    }
     return(
         <React.StrictMode>
             <table>
                 <thead>
                     <tr>
-                        <th onClick={(e) => {console.log(e)}}>First name</th>
+                        <th onClick={() => sorting}>First name</th>
                         <th>Last name</th>
                         <th>Start date</th>
                         <th>Departement</th>

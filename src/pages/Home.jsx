@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom'
-import { useStore } from 'react-redux'
+import { useSelector, useStore } from 'react-redux'
+import { selectModal } from '../utils/selector'
 import { fetchOrUpdateEmployee } from '../features/createEmployee'
+import { setModal } from '../features/setModal'
 import data from '../features/data'
 import Modal from '../components/Modal'
 import DatePicker from "react-datepicker";
@@ -9,7 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 function Home() {
     const store = useStore()
-    const [modal, setModal] = useState(false)
+    const modal = useSelector(selectModal)
     const [dateOfBirth, setDateOfBirth] = useState(null);
     const [startDate, setStartDate] = useState(null);
     const firstName = useRef(null);
@@ -43,14 +45,14 @@ function Home() {
             zipCode: zipCode.current.value
         }
         fetchOrUpdateEmployee(store, employee)
-        //setModal( !modal )
+        setModal(store)
 
 
         event.target.reset();
     }
     return(
         <React.StrictMode>
-            { modal === true ? <Modal /> : null }
+            { modal.showModal === true ? <Modal /> : null }
             <div className="title">
                 <h1>HRnet</h1>
             </div>
