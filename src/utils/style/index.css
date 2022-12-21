@@ -1,3 +1,10 @@
+#root{
+  width: 1049px;
+  margin: auto;
+}
+.currentEmployee{
+  text-align: center;
+}
 .title {
   display: flex;
   align-items: center;
@@ -131,4 +138,37 @@ label {
   border: 1px solid transparent;
   background: transparent;
   box-shadow: none;
+}
+
+.showingEntries{
+  float: left;
+  padding-top: 25px;
+}
+.redirectHome{
+  clear: both;
+  text-align: center;
+}
+
+
+.leftLabel{
+  float: left;
+  margin-bottom: 25px;
+}
+.rightLabel{
+  float: right;
+  margin-bottom: 25px;
+}
+table{
+  margin: 0 auto;
+  clear: both;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 1049px;
+}
+tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+td{
+  padding: 8px 10px;
+  text-align: center;
 }

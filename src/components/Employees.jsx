@@ -3,18 +3,20 @@ import ReactPaginate from 'react-paginate'
 import { useStore } from 'react-redux'
 import { fetchOrUpdateEmployee } from '../features/createEmployee'
 
-function Employees({nbEntries, data}) {
+function Employees({nbEntries, data, totalEntries}) {
     const store = useStore()
-    //const employes = useSelector(selectEmployee)
     const employees = data
-    // A L'écoute des modification du store
     console.log(employees)
     const [pageNumber, setPageNumber] = useState(0)
     const employeesPerPage = nbEntries // Nombre d'employées affiché par pages
-    const pageVisited = pageNumber * employeesPerPage // Sur qu'elle page on se trouve
-    const pageCount = Math.ceil(employees.length / employeesPerPage) // Nombre de page au total
+    let pageVisited = pageNumber * employeesPerPage // Sur qu'elle page on se trouve
+    let pageCount = Math.ceil(employees.length / employeesPerPage) // Nombre de page au total
     const changePage = ({selected}) => {
         setPageNumber(selected)
+        if (numberOfFirstEmployeeShownOnPage > employeesShowPerPage) {
+            //numberOfFirstEmployeeShownOnPage = 1
+            setPageNumber(0)
+        }
     } // Fonction qui va nous permettre d'afficher le nombre de page
     let numberOfFirstEmployeeShownOnPage = pageVisited + 1
     let employeesShowPerPage = pageVisited + employeesPerPage
@@ -39,10 +41,6 @@ function Employees({nbEntries, data}) {
     if (employees.length === 0) {
         numberOfFirstEmployeeShownOnPage = pageVisited
     }
-
-    /*if (numberOfFirstEmployeeShownOnPage > employeesShowPerPage) {
-        numberOfFirstEmployeeShownOnPage = 1
-    }*/
 
     // Si le nombre d'employées montré dans 'Showing ... to ...' est plus grand que le nombre d'entrée réel alors ce sera égale au nombre d'entrées total
     if (employeesShowPerPage > employees.length) {
@@ -139,8 +137,15 @@ function Employees({nbEntries, data}) {
                     {displayEmployees}
                 </tbody>
             </table>
-            <div>
-                <span>{`Showing ${numberOfFirstEmployeeShownOnPage} to ${employeesShowPerPage} of ${employees.length} entries`}</span>
+            <div className="showingEntries">
+                {employees.length < totalEntries ?
+                (
+                    <span>{`Showing ${numberOfFirstEmployeeShownOnPage} to ${employeesShowPerPage} of ${employees.length} entries (filtered from ${totalEntries} total entries)`}</span>
+                )
+                :
+                (
+                    <span>{`Showing ${numberOfFirstEmployeeShownOnPage} to ${employeesShowPerPage} of ${employees.length} entries`}</span>
+                )}
             </div>
             <ReactPaginate
             previousLabel={"Previous"}

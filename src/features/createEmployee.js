@@ -14,7 +14,6 @@ const newEmployeeUpdate = (data) => ({ type: UPDATE, payload: data })
 
 
 export function fetchOrUpdateEmployee(store, employeeInfo) {
-  console.log(employeeInfo)
   const status = selectEmployee(store.getState()).status
 
   if (status === 'pending' || status === 'updating') {
@@ -24,7 +23,6 @@ export function fetchOrUpdateEmployee(store, employeeInfo) {
   store.dispatch(newEmployeeUpdate(employeeInfo))
 }
 export function fetchOrCreateEmployee(store, employeeInfo) {
-  console.log(employeeInfo)
   const status = selectEmployee(store.getState()).status
 
   if (status === 'pending' || status === 'updating') {

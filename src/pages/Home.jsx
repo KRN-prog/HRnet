@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom'
+import DatePicker from "react-datepicker";
 import { useSelector, useStore } from 'react-redux'
 import { selectModal } from '../utils/selector'
 import { fetchOrCreateEmployee } from '../features/createEmployee'
 import { setModal } from '../features/setModal'
 import data from '../features/data'
 import Modal from '../components/Modal'
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function Home() {
@@ -25,22 +25,13 @@ function Home() {
 
     const handleSubmit = event => {
         event.preventDefault();
-
-        let newBirthDate = null
-        let newStartDate = null
-        console.log()
         if (dateOfBirth && startDate) {
-            console.log(dateOfBirth)
-            /*newBirthDate = `${dateOfBirth.getDate()}/${dateOfBirth.getMonth()}/${dateOfBirth.getFullYear()}`
-            newStartDate = `${startDate.getDate()}/${startDate.getMonth()}/${startDate.getFullYear()}`*/
-            /*console.log(new Date(newBirthDate).getTime())
-            console.log(new Date(newBirthDate).getTime())*/
         }
         const employee = {
             firstName: firstName.current.value,
             lastName: lastName.current.value,
-            dateOfBirth: dateOfBirth/*.toLocaleDateString()*/,
-            startDate: startDate/*.toLocaleDateString()*/,
+            dateOfBirth: dateOfBirth,
+            startDate: startDate,
             department: department.current.value,
             street: streetName.current.value,
             city: cityName.current.value,
