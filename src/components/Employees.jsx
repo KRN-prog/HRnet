@@ -6,7 +6,6 @@ import { fetchOrUpdateEmployee } from '../features/createEmployee'
 function Employees({nbEntries, data, totalEntries}) {
     const store = useStore()
     const employees = data
-    console.log(employees)
     const [pageNumber, setPageNumber] = useState(0)
     const employeesPerPage = nbEntries // Nombre d'employées affiché par pages
     let pageVisited = pageNumber * employeesPerPage // Sur qu'elle page on se trouve
@@ -50,6 +49,7 @@ function Employees({nbEntries, data, totalEntries}) {
 
 
 
+    // Créer et afficher les données
     const displayEmployees = employees.slice(pageVisited, pageVisited + employeesPerPage).map((employee, employeeIx) => {
         return(
             <tr key={`employee-${employeeIx}`}>
@@ -67,9 +67,9 @@ function Employees({nbEntries, data, totalEntries}) {
     })
 
 
+    // Trier les données
     const [order, setOrder] = useState("ASC")
     const sorting = (col, type) => {
-        console.log(type)
         if (type === "string") {
             if (order === "ASC") {
                 const sorted = [...employees].sort((a,b) =>{

@@ -73,6 +73,7 @@ label {
   width: 30px;
   height: 30px;
   text-indent: -9999px;
+  cursor: pointer;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
@@ -115,7 +116,6 @@ label {
   text-align: center;
   text-decoration: none !important;
   cursor: pointer;
-  *cursor: hand;
   color: #333 !important;
   border: 1px solid transparent;
   border-radius: 2px;
@@ -126,14 +126,12 @@ label {
   background: linear-gradient(to bottom, #585858 0%, #111 100%);
 }
 .previous.disabledBtn > .previousBtn, .previousBtn:hover{
-  cursor: default;
   color: #666 !important;
   border: 1px solid transparent;
   background: none;
   box-shadow: none;
 }
 .next.disabledBtn > .nextBtn, .nextBtn:hover{
-  cursor: default;
   color: #666 !important;
   border: 1px solid transparent;
   background: transparent;
@@ -171,4 +169,36 @@ tr:nth-child(even) {
 td{
   padding: 8px 10px;
   text-align: center;
+}
+.saveBtn{
+  text-align: center;
+  margin-top: 15px;
+}
+.select{
+  text-align: left;
+  white-space: nowrap;
+  width: 14em;
+  border: 1px solid #c5c5c5;
+  background: #f6f6f6;
+  font-weight: normal;
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 1em;
+  padding: 0.4em 1em;
+  display: inline-block;
+  position: relative;
+  line-height: normal;
+  margin-right: 0.1em;
+  cursor: pointer;
+  vertical-align: middle;
+  border-radius: 3px;
+}
+.select:active{
+  border: 1px solid #003eff;
+  background: #007fff;
+  font-weight: normal;
+  color: #ffffff;
+}
+.select:active > option{
+  background: #f6f6f6;
+  color: #111;
 }

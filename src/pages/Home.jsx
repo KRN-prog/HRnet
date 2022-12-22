@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom'
-import DatePicker from "react-datepicker";
 import { useSelector, useStore } from 'react-redux'
 import { selectModal } from '../utils/selector'
 import { fetchOrCreateEmployee } from '../features/createEmployee'
 import { setModal } from '../features/setModal'
+import DatePicker from "react-datepicker";
 import data from '../features/data'
 import Modal from '../components/Modal'
 import "react-datepicker/dist/react-datepicker.css";
@@ -12,6 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 function Home() {
     const store = useStore()
     const modal = useSelector(selectModal)
+    const [error, setError] = useState(false);
     const [dateOfBirth, setDateOfBirth] = useState(null);
     const [startDate, setStartDate] = useState(null);
     const firstName = useRef(null);
@@ -25,24 +26,26 @@ function Home() {
 
     const handleSubmit = event => {
         event.preventDefault();
-        if (dateOfBirth && startDate) {
+        if (firstName && lastName&& streetName&& cityName && stateName && zipCode && department && dateOfBirth && startDate) {
+            const employee = {
+                firstName: firstName.current.value,
+                lastName: lastName.current.value,
+                dateOfBirth: dateOfBirth,
+                startDate: startDate,
+                department: department.current.value,
+                street: streetName.current.value,
+                city: cityName.current.value,
+                state: stateName.current.value,
+                zipCode: zipCode.current.value
+            }
+            fetchOrCreateEmployee(store, employee)
+            setModal(store)
+    
+            setError(false)
+            event.target.reset();
+        }else{
+            setError(!error)
         }
-        const employee = {
-            firstName: firstName.current.value,
-            lastName: lastName.current.value,
-            dateOfBirth: dateOfBirth,
-            startDate: startDate,
-            department: department.current.value,
-            street: streetName.current.value,
-            city: cityName.current.value,
-            state: stateName.current.value,
-            zipCode: zipCode.current.value
-        }
-        fetchOrCreateEmployee(store, employee)
-        setModal(store)
-
-
-        event.target.reset();
     }
     return(
         <React.StrictMode>
@@ -53,6 +56,7 @@ function Home() {
             <div className="container">
                 <Link to="/employees">View Current Employees</Link>
                 <h2>Create Employee</h2>
+                { error === true ? "Veuillez remplire tout les champs s'il vous plait" : null }
                 <form action="#" id="create-employee" onSubmit={handleSubmit}>
                     <label htmlFor="first-name">First Name</label>
                     <input type="text" id="first-name" name="first-name" ref={firstName}/>
@@ -83,7 +87,7 @@ function Home() {
                         <input id="city" name="city" type="text" ref={cityName}/>
 
                         <label htmlFor="state">State</label>
-                        <select name="state" id="state" ref={stateName}>
+                        <select name="state" id="state" ref={stateName} className='select'>
                             {data.map(element => {
                                 return(<option key={element.abbreviation} value={element.abbreviation}>{element.name}</option>)
                             })}
@@ -94,7 +98,7 @@ function Home() {
                     </fieldset>
 
                     <label htmlFor="department">Department</label>
-                    <select name="department" id="department" ref={department}>
+                    <select name="department" id="department" ref={department} className='select'>
                         <option>Sales</option>
                         <option>Marketing</option>
                         <option>Engineering</option>
@@ -102,7 +106,7 @@ function Home() {
                         <option>Legal</option>
                     </select>
 
-                    <div>
+                    <div className='saveBtn'>
                         <button>Save</button>
                     </div>
                 </form>
