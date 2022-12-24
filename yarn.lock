@@ -6125,10 +6125,10 @@
   "resolved" "https://registry.npmjs.org/klona/-/klona-2.0.5.tgz"
   "version" "2.0.5"
 
-"kyrian-list-menu-option@^1.0.0":
-  "integrity" "sha512-fkHTa7YiewRSazM1rtVymyr8iL4IJM7gVd9MXl0ZP9EEOc9n+jvL0gPxsUahNZw6LBcRvYRlEKq6+OCXfyK90g=="
-  "resolved" "https://registry.npmjs.org/kyrian-list-menu-option/-/kyrian-list-menu-option-1.0.0.tgz"
-  "version" "1.0.0"
+"kyrian-list-menu-option@^1.0.2":
+  "integrity" "sha512-Kaqhka4+D4U702oy/tLkMUXFbl16G810PCSFMSZv6ApWlGEU5r0f+wA+d/qIe0+XaPmuVgvurG2sVOlLUOJx4A=="
+  "resolved" "https://registry.npmjs.org/kyrian-list-menu-option/-/kyrian-list-menu-option-1.0.2.tgz"
+  "version" "1.0.2"
   dependencies:
     "react" "^17.0.2"
 
