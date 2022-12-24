@@ -5,6 +5,8 @@ import { selectModal } from '../utils/selector'
 import { fetchOrCreateEmployee } from '../features/createEmployee'
 import { setModal } from '../features/setModal'
 import DatePicker from "react-datepicker";
+import ListMenu from 'kyrian-list-menu'
+import componentLib from 'create-component-lib'
 import data from '../features/data'
 import Modal from '../components/Modal'
 import "react-datepicker/dist/react-datepicker.css";
@@ -92,6 +94,7 @@ function Home() {
                                 return(<option key={element.abbreviation} value={element.abbreviation}>{element.name}</option>)
                             })}
                         </select>
+                        <ListMenu />
 
                         <label htmlFor="zip-code">Zip Code</label>
                         <input id="zip-code" name="zip-code" type="number" ref={zipCode}/>
