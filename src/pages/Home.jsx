@@ -5,9 +5,9 @@ import { selectModal } from '../utils/selector'
 import { fetchOrCreateEmployee } from '../features/createEmployee'
 import { setModal } from '../features/setModal'
 import DatePicker from "react-datepicker";
-import ListMenu from 'kyrian-list-menu'
-import componentLib from 'create-component-lib'
-import data from '../features/data'
+import DropDownOption from 'kyrian-list-menu-option'
+import states from '../features/states'
+import departments from '../features/department'
 import Modal from '../components/Modal'
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -25,10 +25,9 @@ function Home() {
     const zipCode = useRef(null);
     const department = useRef(null);
 
-
     const handleSubmit = event => {
         event.preventDefault();
-        if (firstName && lastName&& streetName&& cityName && stateName && zipCode && department && dateOfBirth && startDate) {
+        if (firstName && lastName&& streetName&& cityName && stateName.current.value && zipCode && department.current.value && dateOfBirth && startDate) {
             const employee = {
                 firstName: firstName.current.value,
                 lastName: lastName.current.value,
@@ -90,11 +89,8 @@ function Home() {
 
                         <label htmlFor="state">State</label>
                         <select name="state" id="state" ref={stateName} className='select'>
-                            {data.map(element => {
-                                return(<option key={element.abbreviation} value={element.abbreviation}>{element.name}</option>)
-                            })}
+                            <DropDownOption data={states} />
                         </select>
-                        <ListMenu />
 
                         <label htmlFor="zip-code">Zip Code</label>
                         <input id="zip-code" name="zip-code" type="number" ref={zipCode}/>
@@ -102,11 +98,7 @@ function Home() {
 
                     <label htmlFor="department">Department</label>
                     <select name="department" id="department" ref={department} className='select'>
-                        <option>Sales</option>
-                        <option>Marketing</option>
-                        <option>Engineering</option>
-                        <option>Human Resources</option>
-                        <option>Legal</option>
+                        <DropDownOption data={departments} />
                     </select>
 
                     <div className='saveBtn'>

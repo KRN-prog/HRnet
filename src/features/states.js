@@ -235,6 +235,6 @@ const states = [
         "name": "Wyoming",
         "abbreviation": "WY"
     }
-];
+]
 
 export default states
